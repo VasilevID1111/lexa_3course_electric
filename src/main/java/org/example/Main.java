@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         List<String[]> excelTable = new ArrayList<String[]>();
         int rowIterator = 1;
+        //Поменять путь к папке
         FileInputStream fis = new FileInputStream(new File("C:\\Users\\Vasilev\\Desktop\\Формула_Выбора_сечения_ВасильевАД.xlsm"));
         XSSFWorkbook wb = new XSSFWorkbook(fis);
         XSSFSheet sheet = wb.getSheet("Лист1");
