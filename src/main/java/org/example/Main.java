@@ -44,10 +44,10 @@ public class Main {
         System.out.printf("|----------------------------------------------------------------------------------------------------|\n");
         System.out.println("Значения типов кабелей считались из Экселя");
 
-        int moshnost;
-        String unomFaza;
-        double cosf;
-        int cabelLength;
+        int moshnost = 0;
+        String unomFaza = "";
+        double cosf = 0;
+        int cabelLength = 0;
         String indent = "                      "; // 24 spaces.
         Scanner scanner = new Scanner(System.in);
         System.out.println("Взять входные значения из экселя? (Да/Нет)");
@@ -118,42 +118,47 @@ public class Main {
                 System.out.println("Что-то пошло не так, попробуйте снова\n" + e.getLocalizedMessage() + "\n");
             }
         }
+
+        double tok_nagruzki = sila_toka(moshnost,unomFaza,cosf);
+        int sechenie = sechenie4(excelTable, cabelLength, cosf, tok_nagruzki, unomFaza, 4);
+        double dU = Up(unomFaza, cosf, tok_nagruzki, cabelLength, sechenie);
+    }
+    public static double sila_toka(int moshnost, String unomFaza, double cosf) {
+        switch (unomFaza) {
+            case "A":
+            case "B":
+            case "C":
+                return 1000 * moshnost / 220 / cosf;
+            case "ABC":
+                return 1000 * moshnost / 380 / cosf / 1.73;
+        }
+        return 0;
+    }
+    public static double Up(String unomFaza, double cosf, double tok_nagruzki, int cabelLength, int sechenie) {
+        switch (unomFaza) {
+            case "A":
+            case "B":
+            case "C":
+                return 2 * (0.0225 * cabelLength * cosf / sechenie + 0.00008 * cabelLength * Math.sqrt(1 - Math.pow(cosf,2))) * tok_nagruzki * 100 / 220;
+            case "ABC":
+                return 1 * (0.0225 * cabelLength * cosf / sechenie + 0.00008 * cabelLength * Math.sqrt(1 - Math.pow(cosf,2))) * tok_nagruzki * 100 / 380;
+        }
+        return 0;
+    }
+    public static int sechenie4(List<String[]> excelTable, int cabelLength, double cosf, double tok_nagruzki, String unomFaza, int dUnom) {
+        double dU = 0;
+        double v = 0;
+        double Z2 = 0;
+
+        do{
+
+        } while ()
+
+        return v;
     }
 
     public static boolean isRightAnswer(String answer) {
         return answer.equals("Да") || answer.equals("да") || answer.equals("д") || answer.equals("Д");
     }
-    /*
-    public static double sechenie4(List<String[]> excelTable, double L, double cosf, double Ip, String Phase, double dUnom) throws IOException {
-        double dU = 0;
-        double v = 0;
-        double Z2 = 0;
 
-        for (Row row : sheet) {
-            Cell cellS = row.getCell(4); // Column E
-            Cell cellI = row.getCell(3); // Column D
-
-            if (cellS != null && cellI != null) {
-                double s = cellS.getNumericCellValue();
-                double inom = cellI.getNumericCellValue();
-
-                if (Phase.equals("A") || Phase.equals("B") || Phase.equals("C")) {
-                    dU = 2 * ((0.0225 * L * cosf / s + 0.00008 * L * Math.sqrt(1 - Math.pow(cosf, 2)))) * Ip * 100 / 220;
-                }
-                if (Phase.equals("ABC")) {
-                    dU = 1 * ((0.0225 * L * cosf / s + 0.00008 * L * Math.sqrt(1 - Math.pow(cosf, 2)))) * Ip * 100 / 380;
-                }
-
-                if (dU < dUnom && Ip < inom) {
-                    v = s;
-                    Z2 = inom;
-                    break;
-                }
-            }
-        }
-
-        file.close();
-        return v;
-    }
-     */
 }
