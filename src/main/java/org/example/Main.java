@@ -116,6 +116,7 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.println("Что-то пошло не так, попробуйте снова\n" + e.getLocalizedMessage() + "\n");
+                System.exit(130);
             }
         }
 
@@ -128,10 +129,17 @@ public class Main {
         if (sechenie != 0) {
             System.out.printf("%s %.2f \n", indent.substring(0, indent.length() - "Сечение кабеля = ".length()) + "Сечение кабеля =", sechenie);
             System.out.printf("%s %.2f \n\n", indent.substring(0, indent.length() - "dU = ".length()) + "dU =", dU);
+            System.out.println("Подходит кабели под следующими марками:");
+            for (String[] row : excelTable) {
+                if (Double.parseDouble(row[3]) > tok_nagruzki && Double.parseDouble(row[4]) >= sechenie) {
+                    System.out.println(row[0]);
+                }
+            }
         } else { // Ошибка
             System.out.printf("%s \n", indent.substring(0, indent.length() - "Сечение кабеля = ".length()) + "Сечение кабеля = -");
             System.out.printf("%s \n\n", indent.substring(0, indent.length() - "dU = ".length()) + "dU = -");
         }
+
     }
 
     public static double sila_toka(int moshnost, String unomFaza, double cosf) {
@@ -165,12 +173,12 @@ public class Main {
         double sechenie;
         do {
             if (excelTable.size() == i) {
-                if (dU >= dUnom && tok_nagruzki >= Inom) {
+                if (dU > dUnom && tok_nagruzki > Inom) {
                     System.out.println("Невозможно подобрать кабель по сечению и току");
                 } else if (dU > dUnom) {
-                    System.out.println("Невозможно подобрать кабель по току");
-                } else if (tok_nagruzki > Inom) {
                     System.out.println("Невозможно подобрать кабель по сечению");
+                } else if (tok_nagruzki > Inom) {
+                    System.out.println("Невозможно подобрать кабель по току");
                 }
                 sechenie = 0;
                 break;
