@@ -119,42 +119,68 @@ public class Main {
             }
         }
 
-        double tok_nagruzki = sila_toka(moshnost,unomFaza,cosf);
-        int sechenie = sechenie4(excelTable, cabelLength, cosf, tok_nagruzki, unomFaza, 4);
+        double tok_nagruzki = sila_toka(moshnost, unomFaza, cosf);
+        double sechenie = sechenie4(excelTable, cabelLength, cosf, tok_nagruzki, unomFaza, 4);
         double dU = Up(unomFaza, cosf, tok_nagruzki, cabelLength, sechenie);
+
+        System.out.println("Вычисленные значения:");
+        System.out.printf("%s %.2f \n", indent.substring(0, indent.length() - "Ток нагрузки, А = ".length()) + "Ток нагрузки, А =", tok_nagruzki);
+        if (sechenie != 0) {
+            System.out.printf("%s %.2f \n", indent.substring(0, indent.length() - "Сечение кабеля = ".length()) + "Сечение кабеля =", sechenie);
+            System.out.printf("%s %.2f \n\n", indent.substring(0, indent.length() - "dU = ".length()) + "dU =", dU);
+        } else { // Ошибка
+            System.out.printf("%s \n", indent.substring(0, indent.length() - "Сечение кабеля = ".length()) + "Сечение кабеля = -");
+            System.out.printf("%s \n\n", indent.substring(0, indent.length() - "dU = ".length()) + "dU = -");
+        }
     }
+
     public static double sila_toka(int moshnost, String unomFaza, double cosf) {
         switch (unomFaza) {
             case "A":
             case "B":
             case "C":
-                return 1000 * moshnost / 220 / cosf;
+                return 1000 * moshnost / 220.0 / cosf;
             case "ABC":
-                return 1000 * moshnost / 380 / cosf / 1.73;
+                return 1000 * moshnost / 380.0 / cosf / 1.73;
         }
         return 0;
     }
-    public static double Up(String unomFaza, double cosf, double tok_nagruzki, int cabelLength, int sechenie) {
+
+    public static double Up(String unomFaza, double cosf, double tok_nagruzki, int cabelLength, double sechenie) {
         switch (unomFaza) {
             case "A":
             case "B":
             case "C":
-                return 2 * (0.0225 * cabelLength * cosf / sechenie + 0.00008 * cabelLength * Math.sqrt(1 - Math.pow(cosf,2))) * tok_nagruzki * 100 / 220;
+                return 2 * (0.0225 * cabelLength * cosf / sechenie + 0.00008 * cabelLength * Math.sqrt(1 - Math.pow(cosf, 2))) * tok_nagruzki * 100 / 220.0;
             case "ABC":
-                return 1 * (0.0225 * cabelLength * cosf / sechenie + 0.00008 * cabelLength * Math.sqrt(1 - Math.pow(cosf,2))) * tok_nagruzki * 100 / 380;
+                return 1 * (0.0225 * cabelLength * cosf / sechenie + 0.00008 * cabelLength * Math.sqrt(1 - Math.pow(cosf, 2))) * tok_nagruzki * 100 / 380.0;
         }
         return 0;
     }
-    public static int sechenie4(List<String[]> excelTable, int cabelLength, double cosf, double tok_nagruzki, String unomFaza, int dUnom) {
+
+    public static double sechenie4(List<String[]> excelTable, int cabelLength, double cosf, double tok_nagruzki, String unomFaza, double dUnom) {
         double dU = 0;
-        double v = 0;
-        double Z2 = 0;
-
-        do{
-
-        } while ()
-
-        return v;
+        int i = 0;
+        double Inom = 0;
+        double sechenie;
+        do {
+            if (excelTable.size() == i) {
+                if (dU >= dUnom && tok_nagruzki >= Inom) {
+                    System.out.println("Невозможно подобрать кабель по сечению и току");
+                } else if (dU > dUnom) {
+                    System.out.println("Невозможно подобрать кабель по току");
+                } else if (tok_nagruzki > Inom) {
+                    System.out.println("Невозможно подобрать кабель по сечению");
+                }
+                sechenie = 0;
+                break;
+            }
+            sechenie = Double.parseDouble(excelTable.get(i)[4]);
+            Inom = Double.parseDouble(excelTable.get(i)[3]);
+            i++;
+            dU = Up(unomFaza, cosf, tok_nagruzki, cabelLength, sechenie);
+        } while (dU >= dUnom || tok_nagruzki >= Inom);
+        return sechenie;
     }
 
     public static boolean isRightAnswer(String answer) {
