@@ -16,8 +16,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
         List<String[]> excelTable = new ArrayList<String[]>();
         int rowIterator = 1;
+        Scanner scanner = new Scanner(System.in);
         //Поменять путь к папке
-        FileInputStream fis = new FileInputStream(new File("C:\\Users\\Vasilev\\Desktop\\Формула_Выбора_сечения_ВасильевАД.xlsm"));
+        //System.out.println("Вставьте путь до файла Excel");
+        //String filepath = scanner.nextLine();
+        FileInputStream fis = new FileInputStream("C:\\Users\\Vasilev\\Desktop\\VasilevAD_sechenia.xlsm"); //"C:\\Users\\Vasilev\\Desktop\\Формула_Выбора_сечения_ВасильевАД.xlsm"
         XSSFWorkbook wb = new XSSFWorkbook(fis);
         XSSFSheet sheet = wb.getSheet("Лист1");
         boolean lineStillNeed = true;
@@ -50,7 +53,6 @@ public class Main {
         double cosf = 0;
         int cabelLength = 0;
         String indent = "                      "; // 24 spaces.
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Взять входные значения из экселя? (Да/Нет)");
         String answer = scanner.nextLine();
         boolean isCorrentInput = false;
@@ -130,12 +132,19 @@ public class Main {
         if (sechenie != 0) {
             System.out.printf("%s %.2f \n", indent.substring(0, indent.length() - "Сечение кабеля = ".length()) + "Сечение кабеля =", sechenie);
             System.out.printf("%s %.2f \n\n", indent.substring(0, indent.length() - "dU = ".length()) + "dU =", dU);
-            System.out.println("Подходит кабели под следующими марками:");
+
+
+            System.out.println("Подходят кабели под следующими марками:");
+            System.out.printf("|----------------------------------------------------------------------------------------------------|\n");
+            System.out.printf("| %-30s | %-4s | %-10s | %-27s | %-15s |\n", "Марка", "№п\\п", "Тип кабеля", "Ном.ток кабеля (проверка 1)", "Сечение кабеля");
+            System.out.printf("|--------------------------------|------|------------|-----------------------------|-----------------|\n");
             for (String[] row : excelTable) {
                 if (Double.parseDouble(row[3]) > tok_nagruzki && Double.parseDouble(row[4]) >= sechenie) {
-                    System.out.println(row[0]);
+                    System.out.printf("| %-30s | %-4s | %-10s | %-27s | %-15s | ", row[0], row[1], row[2], row[3], row[4]);
+                    System.out.println();
                 }
             }
+            System.out.printf("|----------------------------------------------------------------------------------------------------|\n");
         } else { // Ошибка
             System.out.printf("%s \n", indent.substring(0, indent.length() - "Сечение кабеля = ".length()) + "Сечение кабеля = -");
             System.out.printf("%s \n\n", indent.substring(0, indent.length() - "dU = ".length()) + "dU = -");

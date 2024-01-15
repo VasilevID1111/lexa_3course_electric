@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="electric_alg:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/electric_alg_jar</output-path>
+    <root id="archive" name="electric_alg.jar">
+      <element id="module-output" name="electric_alg" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.5/commons-codec-1.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/poi/poi-ooxml-schemas/3.9/poi-ooxml-schemas-3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/stax/stax-api/1.0.1/stax-api-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/2.0.11/slf4j-api-2.0.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-simple/2.0.11/slf4j-simple-2.0.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/poi/poi-ooxml/3.9/poi-ooxml-3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.8.2/log4j-api-2.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/poi/poi/3.9/poi-3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-to-slf4j/2.8.2/log4j-to-slf4j-2.8.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
